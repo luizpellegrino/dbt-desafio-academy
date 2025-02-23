@@ -33,7 +33,7 @@ clean-targets: # directories to be removed by `dbt clean`
 models:
   query-comment: false
   staging:
-    +schema: dbt_luizapellegrino_stg
+    +schema: ras_adventure_works
     +materialized: view
   intermediate:
     +schema: dbt_luizapellegrino_int

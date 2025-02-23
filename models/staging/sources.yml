@@ -14,3 +14,5 @@ sources:
       - name: productcosthistory
       - name: salesterritory
       - name: salesorderdetail
+      - name: stateprovince
+      - name: address

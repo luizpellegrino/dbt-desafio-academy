@@ -23,12 +23,13 @@ with
             totaldue,
             rowguid,
             modifieddate
-        from {{ source("raw_adventure_works", "SALESORDERHEADER") }}
+        from {{ source("raw_adventure_works", "salesorderheader") }}
     )
 
 select
     salesorderid as order_id,
-    orderdate as order_date,
+
+    cast(orderdate as date) as order_date,
     shipdate as ship_date,
     status,
     onlineorderflag as online_order_flag,
@@ -47,7 +48,7 @@ select
     totaldue as total_due,
     rowguid as row_guid,
     modifieddate as modified_date,
-    year(order_date) as order_year,
-    month(order_date) as order_month
+    year(cast(orderdate as date)) as order_year,
+    month(cast(orderdate as date)) as order_month
 
-from orders
+from orders 
