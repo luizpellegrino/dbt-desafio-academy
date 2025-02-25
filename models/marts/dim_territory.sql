@@ -1,5 +1,5 @@
 with
-    salesterritory as (select territoryid, countryregioncode, salesytd, saleslastyear, modifieddate
+    dim_territory as (select territoryid, countryregioncode, salesytd, saleslastyear, modifieddate
     from {{ source("raw_adventure_works", "salesterritory") }}
     )
 
@@ -14,4 +14,4 @@ select
         else (salesytd - saleslastyear) / saleslastyear * 100
     end as sales_growth_percentage
 
-from salesterritory
+from dim_territory

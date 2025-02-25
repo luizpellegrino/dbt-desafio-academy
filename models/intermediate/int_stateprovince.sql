@@ -1,10 +1,10 @@
 with
-    stg_stateprovince as (
-        select stateprovinceid, stateprovincecode, name as state_name, territoryid, modifieddate
-        from {{ source("raw_adventure_works", "stateprovince") }}
+    int_stateprovince as (
+        select stateprovinceid as state_id, stateprovincecode as state_code, state_name, territoryid as territory_id, modifieddate as modified_date
+        from {{ ref("stg_stateprovince") }}
 
     )
 
 select *
-from stg_stateprovince
+from int_stateprovince
 

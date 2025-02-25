@@ -1,10 +1,12 @@
 with
-    stg_salesterritory as (
-        select territoryid, countryregioncode, salesytd, saleslastyear, modifieddate
-        from {{ source("raw_adventure_works", "salesterritory") }}
+    int_address as (
+        select city, addressid as address_id, stateprovinceid as state_id, spatiallocation as spatial_location
+        from {{ source("raw_adventure_works", "address") }}
 
     )
 
 select *
-from stg_salesterritory
+from int_address
+
+
 

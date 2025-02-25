@@ -1,0 +1,273 @@
+Version: 2
+
+models:
+  - name: dim_credit_card.sql
+    description: "Dimensão de cadastro de cartões de crédito"
+    columns:
+      - name: card_id
+        description: "Identificação do cartão de crédito"
+        tests:
+          - unique
+          - not_null
+      - name: card_type
+        description: "Tipo de cartão"
+        tests:
+          - not_null
+      - name: marked_card_number
+        description: "Número do cartão"
+        tests:
+          - unique
+          - not_null
+  - name: dim_customer.sql
+    description: "Tabela de cadastro de clientes"
+    columns:
+      - name: customer_id
+        description: "Identificador de clientes"
+        tests:
+          - unique
+          - not_null
+      - name: territory_id
+        description: "Identificador de território de compra"
+        tests:
+          - not_null
+      - name: modified_date
+        description: "Data da última modificação"
+        tests:
+          - not_null
+  - name: dim_location_sales.sql
+    description: "Tabela de vendas por localização detalhada"
+    columns:
+      - name: territory_id
+        description: "Identificador de território"
+        tests:
+          - not_null
+          - relationships:
+              field: territory_id
+              to: ref('int_salesterritory')
+      - name: country
+        description: "País referente ao território cadastrado"
+        tests:
+          - not_null
+      - name: state_name
+        description: "Estado referente ao território cadastrado"
+        tests:
+          - not_null
+      - name: address_id
+        description: "Identificador de endereço de clientes"
+        tests:
+          - not_null
+          - relationships:
+              field: address_id
+              to: ref('int_address')
+      - name: city
+        description: "Cidade referente ao endereço cadastrado"
+        tests:
+          - not_null
+      - name: total_due
+        description: "Total devido por pedido"
+        tests:
+          - not_null
+      - name: sales_ytd
+        description: "Total de vendas no período de um ano para a data atual"
+        tests:
+          - not_null
+      - name: sales_last_year
+        description: "Total de vendas no ano anterior"
+        tests:
+          - not_null
+  - name: dim_order_detail.sql
+    description: "Dimensão de detalhes de pedidos"
+    columns:
+      - name: order_id
+        description: "Identificador de pedidos"
+        tests:
+          - unique
+          - not_null
+      - name: oderder_detail_id
+        description: "Identificador de detalhamento de pedido"
+        tests:
+          - not_null
+      - name: carrier_tracking_number
+        description: "Número de rastreio da transportadora"
+        tests:
+          - unique
+          - not_null
+      - name: order_quantity
+        description: "Quantidade vendida por pedido"
+        tests:
+          - unique
+          - not_null
+      - name: unit_price
+        description: "Preço unitário"
+        tests:
+          - not_null
+      - name: total_price
+        description: "Preço total do pedido"
+        tests:
+          - not_null
+      - name: modified_date
+        description: "Data da última modificação"
+        tests:
+          - not_null
+  - name: dim_product.sql
+    description: "Dimensão de produto"
+    columns:
+      - name: product_id
+        description: "Identificador de pedido"
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: "Nome do produto"
+        tests:
+          - unique
+          - not_null
+      - name: product_number
+        description: "Número do produto"
+        tests:
+          - unique
+          - not_null
+      - name: product_color
+        description: "Cor do produto"
+        tests:
+          - not_null
+      - name: product_status
+        description: "Status do produto, se está ativo ou não"
+        tests:
+          - not_null
+  - name: dim_sales_reason.sql
+    description: "Dimensão de motivo de venda"
+    columns:
+      - name: sales_reason_id
+        description: "Identificador de motivo de venda"
+        tests:
+          - not_null
+      - name: sales_reason
+        description: "Motivo de venda"
+        tests:
+          - not_null
+      - name: sales_reason_type
+        description: "Tipo de motivo de venda"
+        tests:
+          - not_null
+  - name: dim_territory
+    description: "Dimensão de território de vendas"
+    columns:
+      - name: territory_id
+        description: "Identificador de territórios"
+        tests:
+          - not_null
+      - name: country
+        description: "País de compra"
+        tests:
+          - not_null
+      - name: sales_ytd
+        description: "Vendas no período de um ano até a data atual"
+        tests:
+          - not_null
+      - name: sales_last_year
+        description: "Vendas no último ano"
+        tests:
+          - not_null
+      - name: modified_date
+        description: "Data da última modificação"
+        tests:
+          - not_null
+      - name: sales_growth_percentage
+        description: "Percentual de crescimento de vendas"
+        tests:
+          - not_null
+  - name: fct_sales_orders.sql
+    description: "Fato vendas"
+    columns:
+      - name: order_date
+        description: "Data do pedido"
+        tests:
+          - not_null
+      - name: ship_date
+        description: "Data de envio"
+        tests:
+          - not_null
+      - name: status
+        description: "Status do pedido"
+        tests:
+          - not_null
+      - name: online_order_flag
+        description: "Identificador de pedidos feitos online"
+        tests:
+          - not_null
+      - name: purchase_order_number
+        description: "Número da compra"
+        tests:
+          - not_null
+      - name: account_number
+        description: "Número da conta do pedido"
+        tests:
+          - not_null
+      - name: customer_id
+        description: "Identificador do cliente"
+        tests:
+          - not_null
+          - relationships:
+              field: customer_id
+              to: ref('dim_customer')
+      - name: sales_personid
+        description: "Identificador do vendedor"
+        tests:
+          - not_null
+      - name: territory_id
+        description: "Identificador do território de compra"
+        tests:
+          - not_null
+          - relationships:
+              field: territory_id
+              to: ref('dim_location_sales')
+      - name: billtoaddress_id
+        description: "Identificador de endereço de cobrança"
+        tests:
+          - not_null
+          - relationships:
+              field: address_id
+              to: ref('dim_location_sales')
+      - name: shiptoaddress_id
+        description: "Identificador de endereço de entrega"
+        tests:
+          - not_null
+          - relationships:
+              field: address_id
+              to: ref('dim_location_sales')
+      - name: ship_method_id
+        description: "Identificador de método de envio"
+        tests:
+          - not_null
+      - name: credit_card_id
+        description: "Identificador de cartão de crédito"
+        tests:
+          - not_null
+          - relationships:
+              field: card_id
+              to: ref('dim_credit_card')
+      - name: currencyrate_id
+        description: "Identificador de taxa atual"
+        tests:
+          - not_null
+      - name: taxamt
+        description: "Taxa mínima"
+        tests:
+          - not_null
+      - name: total_due
+        description: "Total devido"
+        tests:
+          - not_null
+      - name: modified_date
+        description: "Data da última modificação"
+        tests:
+          - not_null
+      - name: order_year
+        description: "Ano do pedido"
+        tests:
+          - not_null
+      - name: order_month
+        description: "Mês do pedido"
+        tests:
+          - not_null

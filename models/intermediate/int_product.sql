@@ -5,7 +5,7 @@ with
 
 select 
     productid as product_id,
-    productname as product_name,
+       COALESCE(productname, 'none') as product_name,
     productnumber as product_number,
       COALESCE(productcolor, 'none') AS product_color,
     case 

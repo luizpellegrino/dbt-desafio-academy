@@ -1,10 +1,9 @@
-with customer as (select customerid, storeid, territoryid, modifieddate
+with customer as (select customerid, territoryid, modifieddate
     from {{ ref("stg_customer") }}
     )
 
 select
     customerid as customer_id,
-    storeid as store_id,
     territoryid as territory_id,
     modifieddate as modified_date,
     case 
