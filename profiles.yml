@@ -1,0 +1,14 @@
+models:
+  staging:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "INDICIUMACADEMY"
+      user: "LUIZA_PELLEGRINO"
+      password: "Z@JpP(Ew;}N3z?+[6aUDHd"
+      role: "FEA_STUDENT"
+      database: "FEA24_11"
+      warehouse: "ACADEMY-WAREHOUSE"
+      schema: "DBT_LUIZAPELLEGRINO_STG"
+      threads: 4
