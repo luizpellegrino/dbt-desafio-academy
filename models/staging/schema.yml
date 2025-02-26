@@ -239,6 +239,10 @@ sources:
             description: "Preço unitário"
             tests:
               - not_null
+          - name: unitpricediscount
+            description: "Desconto no valor do produto"
+            tests:
+              - not_null
           - name: modifieddate
             description: "Data da última modificação do registro"
             tests:

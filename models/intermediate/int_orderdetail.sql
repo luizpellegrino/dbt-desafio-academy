@@ -1,4 +1,4 @@
-with orderdetail as (select orderid, productid, orderdetailid, carriertrackingnumber, orderquantity,  unitprice, orderquantity * unitprice AS total_price, modifieddate
+with orderdetail as (select orderid, productid, orderdetailid, carriertrackingnumber, orderquantity,  unitprice, unitpricediscount, orderquantity * unitprice AS total_price, modifieddate
     from {{ ref('stg_orderdetail') }}
     )
 
@@ -9,6 +9,7 @@ select
     coalesce(carriertrackingnumber, 'None') as carrier_tracking_number,
     orderquantity as order_quantity,
     unitprice as unit_price,
+    unitpricediscount as unit_price_discount,
     total_price,
     modifieddate as modified_date
 

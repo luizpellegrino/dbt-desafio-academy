@@ -109,6 +109,10 @@ models:
         description: "Preço total do pedido"
         tests:
           - not_null
+      - name: unit_price_discount
+        description: "Desconto no valor do produto"
+        tests:
+          - not_null
       - name: modified_date
         description: "Data da última modificação"
         tests:
