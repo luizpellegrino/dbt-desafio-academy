@@ -3,17 +3,18 @@ with orderdetail as (select orderid, orderdetailid, carriertrackingnumber, order
     )
 
 select 
-    orderid as order_id,
-    productid as product_id,
-    orderdetailid as order_detail_id,
-    carriertrackingnumber as carrier_tracking_number,
-    orderquantity as order_quantity,
-    unitprice as unit_price,
-    unitpricediscount as unit_price_discount,
-    total_price,
-
-    modifieddate as modified_date
+    o.orderid as order_id,
+    o.productid as product_id,
+    o.orderdetailid as order_detail_id,
+    o.carriertrackingnumber as carrier_tracking_number,
+    o.orderquantity as order_quantity,
+    o.unitprice as unit_price,
+    o.unitpricediscount as unit_price_discount,
+    o.total_price,
+    o.modifieddate as modified_date,
+    p.product_name
     
 
-from orderdetail
+from orderdetail o
+left join {{ ref('int_product') }} p on o.productid = p.product_id
 
