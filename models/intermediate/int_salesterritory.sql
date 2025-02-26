@@ -5,7 +5,7 @@ with
 
 select 
     territoryid as territory_id,
-    countryregioncode as country,
+    countryregioncode as region_code,
     COALESCE(salesytd, 0) AS sales_ytd, 
     COALESCE(saleslastyear, 0) AS sales_last_year, 
     modifieddate as modified_date,
