@@ -14,14 +14,14 @@ sources:
               - not_null
           - name: territoryid
             description: "Identificador do território onde o cliente se localiza"
-            tests: 
+            tests:
               - not_null
               - relationships:
                   field: territoryid
                   to: source('raw_adventure_works', 'salesterritory')
           - name: modifieddate
             description: "Data do último registro"
-            tests: 
+            tests:
               - not_null
 
       - name: salesorderheader
@@ -43,7 +43,7 @@ sources:
           - name: shipdate
             description: "Data de envio do pedido"
             tests:
-               - not_null
+              - not_null
           - name: status
             description: "Status do pedido"
             tests:
@@ -61,7 +61,7 @@ sources:
             tests:
               - not_null
           - name: customerid
-            description: "Identificador do cliente" 
+            description: "Identificador do cliente"
             tests:
               - not_null
               - relationships:
@@ -209,14 +209,14 @@ sources:
           - name: salesytd
             description: "Total de compras feitas de um ano para a data atual"
             tests:
-             - not_null
+              - not_null
           - name: saleslastyear
             description: "Compras feitas no último ano"
             tests:
               - not_null
           - name: modifieddate
             description: "Data da última modificação"
-            tests: 
+            tests:
               - not_null
       - name: salesorderdetail
         columns:
@@ -226,7 +226,7 @@ sources:
               - not_null
           - name: salesorderdetailid
             description: "Identificador de detalhamento de pedido de venda"
-            tests: 
+            tests:
               - unique
               - not_null
           - name: carriertrackingnumber
@@ -237,6 +237,10 @@ sources:
               - not_null
           - name: unitprice
             description: "Preço unitário"
+            tests:
+              - not_null
+          - name: unitpricediscount
+            description: "Desconto no valor do produto"
             tests:
               - not_null
           - name: modifieddate
@@ -260,13 +264,13 @@ sources:
             description: "Identificador de província"
             tests:
               - not_null
-          - name: name 
+          - name: name
             description: "Nome da proviícia"
             tests:
               - not_null
           - name: territoryid
             description: "Identificador de território"
-            tests: 
+            tests:
               - not_null
           - name: modifieddate
             description: "Data da última modificação do registro"
@@ -276,7 +280,7 @@ sources:
         columns:
           - name: addressid
             description: "Identificador de endereço"
-            tests: 
+            tests:
               - unique
               - not_null
           - name: city
@@ -291,7 +295,13 @@ sources:
             description: "Localização"
             tests:
               - not_null
-
-        
-
-          
+      - name: salesorderheadersalesreason
+        description: "Tabela de conexão de motivos de venda aos identificadores de venda"
+        columns:
+          - name: salesorderid
+            description: "Identificador de pedido de venda"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw_adventure_works', 'salesorderheader')
+                  field: salesorderid
